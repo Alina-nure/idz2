@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake Game</title>
- <link rel="stylesheet" href="styles.css">
-   </head>
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
     <canvas id="snakeCanvas" width="400" height="400"></canvas>
     <script>
@@ -17,25 +17,34 @@
         let apple = { x: 15, y: 15 };
 
         function draw() {
+            // Clear the canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the snake
             for (let i = 0; i < snake.length; i++) {
                 ctx.fillStyle = i === 0 ? "#00F" : "#0F0";
                 ctx.fillRect(snake[i].x * boxSize, snake[i].y * boxSize, boxSize, boxSize);
             }
 
+            // Draw the apple
             ctx.fillStyle = "#F00";
             ctx.fillRect(apple.x * boxSize, apple.y * boxSize, boxSize, boxSize);
         }
 
         function move() {
+            // Move the snake
             const head = { x: snake[0].x, y: snake[0].y };
 
+            // Check if the snake ate the apple
             if (head.x === apple.x && head.y === apple.y) {
+                // Generate a new apple
                 apple = { x: Math.floor(Math.random() * canvas.width / boxSize), y: Math.floor(Math.random() * canvas.height / boxSize) };
             } else {
+                // Remove the last segment of the snake
                 snake.pop();
             }
 
+            // Determine the new head position
             let newHead;
             if (head.x < apple.x) {
                 newHead = { x: head.x + 1, y: head.y };
@@ -47,16 +56,19 @@
                 newHead = { x: head.x, y: head.y - 1 };
             }
 
+            // Check if the new head position intersects with the snake body
             if (isCollision(newHead, snake)) {
                 alert("Game Over!");
                 resetGame();
                 return;
             }
 
+            // Add the new head to the snake
             snake.unshift(newHead);
         }
 
         function isCollision(position, array) {
+            // Check if the position collides with any segment of the array
             for (let i = 0; i < array.length; i++) {
                 if (position.x === array[i].x && position.y === array[i].y) {
                     return true;
@@ -66,6 +78,7 @@
         }
 
         function resetGame() {
+            // Reset the snake and apple positions
             snake = [{ x: 10, y: 10 }];
             apple = { x: 15, y: 15 };
         }
@@ -75,7 +88,7 @@
             draw();
         }
 
-        setInterval(gameLoop, 100); 
+        setInterval(gameLoop, 100); // Adjust the interval as needed
     </script>
 </body>
 </html>
