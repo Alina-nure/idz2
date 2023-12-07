@@ -17,34 +17,26 @@
         let apple = { x: 15, y: 15 };
 
         function draw() {
-            // Clear the canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw the snake
-            for (let i = 0; i < snake.length; i++) {
+           for (let i = 0; i < snake.length; i++) {
                 ctx.fillStyle = i === 0 ? "#00F" : "#0F0";
                 ctx.fillRect(snake[i].x * boxSize, snake[i].y * boxSize, boxSize, boxSize);
             }
 
-            // Draw the apple
             ctx.fillStyle = "#F00";
             ctx.fillRect(apple.x * boxSize, apple.y * boxSize, boxSize, boxSize);
         }
 
         function move() {
-            // Move the snake
             const head = { x: snake[0].x, y: snake[0].y };
 
             // Check if the snake ate the apple
             if (head.x === apple.x && head.y === apple.y) {
-                // Generate a new apple
                 apple = { x: Math.floor(Math.random() * canvas.width / boxSize), y: Math.floor(Math.random() * canvas.height / boxSize) };
             } else {
-                // Remove the last segment of the snake
                 snake.pop();
             }
 
-            // Determine the new head position
             let newHead;
             if (head.x < apple.x) {
                 newHead = { x: head.x + 1, y: head.y };
@@ -63,7 +55,6 @@
                 return;
             }
 
-            // Add the new head to the snake
             snake.unshift(newHead);
         }
 
